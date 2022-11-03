@@ -12,12 +12,22 @@
     />
 
     <script src="update_file_list.js"></script>
+    <script src="file_form.js"></script>
 
     <title>go-upload-progress</title>
   </head>
   <body>
     <div class="container">
       <h1>go-upload-progress</h1>
+
+      <form class="file-form">
+        <div class="mb-3">
+          <label class="form-label" for="file">File:</label>
+          <input class="form-control" name="file" type="file" required />
+        </div>
+        <button class="btn btn-primary" type="submit">Upload</button>
+        <hr />
+      </form>
 
       <ul class="file-list"></ul>
     </div>
