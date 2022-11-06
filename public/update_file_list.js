@@ -21,31 +21,61 @@ function RemoveAllChildren(element) {
 }
 
 function CreateFileInfoView(fileInfo) {
-  return new Tag("dl", [
-    ...CreateFilePropertyViews(
-      "Name",
-      new Tag("a", { href: `/files/${fileInfo.Name}` }, [
-        new Text(fileInfo.Name),
-      ])
-    ),
-    ...CreateFilePropertyViews("Size", new Text(`${fileInfo.Size} B`)),
-    ...CreateFilePropertyViews(
-      "ModTime",
-      new Tag("time", { datetime: fileInfo.ModTime }, [
-        new Text(ReformatDatetime(fileInfo.ModTime)),
-      ])
-    ),
-    new Tag("hr"),
+  return new Tag("div", { class: "card mb-3" }, [
+    new Tag("div", { class: "card-body" }, [
+      new Tag("dl", { class: "mb-0" }, [
+        ...CreateFilePropertyViews(
+          "Name:",
+          "bi-link",
+          new Tag("a", { href: `/files/${fileInfo.Name}` }, [
+            new Text(fileInfo.Name),
+          ])
+        ),
+        ...CreateFilePropertyViews(
+          "Size:",
+          "bi-file-earmark",
+          new Text(FormatSize(fileInfo.Size))
+        ),
+        ...CreateFilePropertyViews(
+          "Modification time:",
+          "bi-calendar",
+          new Tag("time", { datetime: fileInfo.ModTime }, [
+            new Text(FormatDatetime(fileInfo.ModTime)),
+          ]),
+          true
+        ),
+      ]),
+    ]),
   ]);
 }
 
-function CreateFilePropertyViews(name, valueTag) {
-  return [new Tag("dt", [new Text(name)]), new Tag("dd", [valueTag])];
+function CreateFilePropertyViews(name, valueIcon, valueTag, isLast = false) {
+  return [
+    new Tag("dt", [new Text(name)]),
+    new Tag("dd", isLast ? { class: "mb-0" } : undefined, [
+      new Tag("i", { class: valueIcon }),
+      new Text("\u00a0"),
+      valueTag,
+    ]),
+  ];
 }
 
-function ReformatDatetime(datetime) {
-  const options = { dateStyle: "full", timeStyle: "full" };
+function FormatSize(size) {
+  const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
 
+  let unitIndex = 0;
+  while (size > 1024) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  const formatOptions = { style: "unit", unit: units[unitIndex] };
+  return new Intl.NumberFormat("en-US", formatOptions).format(size);
+}
+
+function FormatDatetime(datetime) {
   const parsedDatetime = new Date(datetime);
-  return new Intl.DateTimeFormat("en-US", options).format(parsedDatetime);
+
+  const formatOptions = { dateStyle: "full", timeStyle: "long" };
+  return new Intl.DateTimeFormat("en-US", formatOptions).format(parsedDatetime);
 }
