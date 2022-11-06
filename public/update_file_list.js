@@ -5,11 +5,10 @@ async function UpdateFileList() {
   const fileListView = document.querySelector(".file-list");
   RemoveAllChildren(fileListView);
 
-  for (const fileInfo of fileInfos) {
-    const fileInfoView = CreateFileInfoView(fileInfo);
-    const itemView = CreateElementWrapper("li", fileInfoView);
-    fileListView.appendChild(itemView);
-  }
+  fileInfos.forEach((fileInfo) => {
+    const fileInfoView = new Tag("li", [CreateFileInfoView(fileInfo)]);
+    fileListView.appendChild(fileInfoView.toDOM());
+  });
 }
 
 window.addEventListener("DOMContentLoaded", UpdateFileList);
@@ -22,44 +21,26 @@ function RemoveAllChildren(element) {
 }
 
 function CreateFileInfoView(fileInfo) {
-  const container = document.createElement("dl");
-
-  const linkView = CreateElementWithText("a", fileInfo.Name);
-  linkView.setAttribute("href", `/files/${fileInfo.Name}`);
-  AppendFilePropertyView(container, "Name", linkView);
-
-  const sizeView = document.createTextNode(`${fileInfo.Size} B`);
-  AppendFilePropertyView(container, "Size", sizeView);
-
-  const reformattedModTime = ReformatDatetime(fileInfo.ModTime);
-  const timeView = CreateElementWithText("time", reformattedModTime);
-  timeView.setAttribute("datetime", fileInfo.ModTime);
-  AppendFilePropertyView(container, "ModTime", timeView);
-
-  const separator = document.createElement("hr");
-  container.appendChild(separator);
-
-  return container;
+  return new Tag("dl", [
+    ...CreateFilePropertyViews(
+      "Name",
+      new Tag("a", { href: `/files/${fileInfo.Name}` }, [
+        new Text(fileInfo.Name),
+      ])
+    ),
+    ...CreateFilePropertyViews("Size", new Text(`${fileInfo.Size} B`)),
+    ...CreateFilePropertyViews(
+      "ModTime",
+      new Tag("time", { datetime: fileInfo.ModTime }, [
+        new Text(ReformatDatetime(fileInfo.ModTime)),
+      ])
+    ),
+    new Tag("hr"),
+  ]);
 }
 
-function AppendFilePropertyView(container, name, valueElement) {
-  const nameView = CreateElementWithText("dt", name);
-  container.appendChild(nameView);
-
-  const valueView = CreateElementWrapper("dd", valueElement);
-  container.appendChild(valueView);
-}
-
-function CreateElementWithText(tag, text) {
-  const textView = document.createTextNode(text);
-  return CreateElementWrapper(tag, textView);
-}
-
-function CreateElementWrapper(wrapperTag, element) {
-  const wrapper = document.createElement(wrapperTag);
-  wrapper.appendChild(element);
-
-  return wrapper;
+function CreateFilePropertyViews(name, valueTag) {
+  return [new Tag("dt", [new Text(name)]), new Tag("dd", [valueTag])];
 }
 
 function ReformatDatetime(datetime) {
