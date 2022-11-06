@@ -33,9 +33,17 @@
               <label class="form-label" for="file">File:</label>
               <input class="form-control" name="file" type="file" required />
             </div>
-            <button class="btn btn-primary" type="submit">
-              <i class="bi-upload"></i>&nbsp;Upload
-            </button>
+            <div class="d-flex">
+              <button class="btn btn-primary me-2" type="submit">
+                <i class="bi-upload"></i>&nbsp;Upload
+              </button>
+              <button
+                class="total-delete-button btn btn-outline-secondary"
+                type="button"
+              >
+                <i class="bi-trash"></i>&nbsp;Delete all
+              </button>
+            </div>
           </form>
         </div>
       </div>
