@@ -9,6 +9,8 @@ async function UpdateFileList() {
     const fileInfoView = new Tag("li", [CreateFileInfoView(fileInfo)]);
     fileListView.appendChild(fileInfoView.toDOM());
   });
+
+  InitializeDeleteButtons();
 }
 
 window.addEventListener("DOMContentLoaded", UpdateFileList);
@@ -22,8 +24,8 @@ function RemoveAllChildren(element) {
 
 function CreateFileInfoView(fileInfo) {
   return new Tag("div", { class: "card mb-3" }, [
-    new Tag("div", { class: "card-body" }, [
-      new Tag("dl", { class: "mb-0" }, [
+    new Tag("div", { class: "card-body d-flex" }, [
+      new Tag("dl", { class: "flex-grow-1 me-3 mb-0" }, [
         ...CreateFilePropertyViews(
           "Name:",
           "bi-link",
@@ -45,6 +47,14 @@ function CreateFileInfoView(fileInfo) {
           true
         ),
       ]),
+      new Tag(
+        "button",
+        {
+          class: "delete-button btn btn-outline-secondary align-self-start",
+          "data-filename": fileInfo.Name,
+        },
+        [new Tag("i", { class: "bi-trash" })]
+      ),
     ]),
   ]);
 }
