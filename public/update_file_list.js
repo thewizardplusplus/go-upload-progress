@@ -1,6 +1,5 @@
 async function UpdateFileList() {
-  const response = await fetch("/api/v1/files");
-  const fileInfos = await response.json();
+  const fileInfos = await getFiles();
 
   const fileListView = document.querySelector(".file-list");
   RemoveAllChildren(fileListView);
