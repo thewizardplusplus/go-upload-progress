@@ -1,3 +1,5 @@
+const eventAttributePrefix = "on";
+
 class Text {
   text = "";
 
@@ -34,6 +36,13 @@ class Tag {
     const element = document.createElement(this.name);
 
     Object.entries(this.attributes).forEach(([name, value]) => {
+      if (name.startsWith(eventAttributePrefix)) {
+        const eventName = name.slice(eventAttributePrefix.length);
+        element.addEventListener(eventName, value);
+
+        return;
+      }
+
       element.setAttribute(name, value);
     });
 

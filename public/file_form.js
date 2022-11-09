@@ -6,4 +6,10 @@ window.addEventListener("DOMContentLoaded", () => {
     await saveFile(new FormData(fileForm));
     await UpdateFileList();
   });
+
+  const totalDeleteButton = document.querySelector(".total-delete-button");
+  totalDeleteButton.addEventListener("click", async () => {
+    await deleteFiles();
+    await UpdateFileList();
+  });
 });

@@ -8,8 +8,6 @@ async function UpdateFileList() {
     const fileInfoView = new Tag("li", [CreateFileInfoView(fileInfo)]);
     fileListView.appendChild(fileInfoView.toDOM());
   });
-
-  InitializeDeleteButtons();
 }
 
 window.addEventListener("DOMContentLoaded", UpdateFileList);
@@ -49,8 +47,11 @@ function CreateFileInfoView(fileInfo) {
       new Tag(
         "button",
         {
-          class: "delete-button btn btn-outline-secondary align-self-start",
-          "data-filename": fileInfo.Name,
+          class: "btn btn-outline-secondary align-self-start",
+          onclick: async () => {
+            await deleteFile(fileInfo.Name);
+            await UpdateFileList();
+          },
         },
         [new Tag("i", { class: "bi-trash" })]
       ),
