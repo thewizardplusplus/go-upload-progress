@@ -53,3 +53,10 @@ export class Tag {
     return element;
   }
 }
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
+export function removeAllChildren(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}

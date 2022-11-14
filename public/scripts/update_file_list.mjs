@@ -1,11 +1,11 @@
 import * as api from "./api.mjs";
-import { Text, Tag } from "./markup.mjs";
+import { Text, Tag, removeAllChildren } from "./markup.mjs";
 
 export async function updateFileList() {
   const fileInfos = await api.getFiles();
 
   const fileListView = document.querySelector(".file-list");
-  RemoveAllChildren(fileListView);
+  removeAllChildren(fileListView);
 
   fileInfos.forEach((fileInfo) => {
     const fileInfoView = new Tag("li", [CreateFileInfoView(fileInfo)]);
@@ -14,13 +14,6 @@ export async function updateFileList() {
 }
 
 window.addEventListener("DOMContentLoaded", updateFileList);
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
-function RemoveAllChildren(element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
 
 function CreateFileInfoView(fileInfo) {
   return new Tag("div", { class: "card mb-3" }, [
