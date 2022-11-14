@@ -1,6 +1,6 @@
 const eventAttributePrefix = "on";
 
-class Text {
+export class Text {
   text = "";
 
   constructor(text) {
@@ -12,7 +12,7 @@ class Text {
   }
 }
 
-class Tag {
+export class Tag {
   name;
   attributes = {};
   children = [];

@@ -1,5 +1,8 @@
-async function UpdateFileList() {
-  const fileInfos = await getFiles();
+import * as api from "./api.mjs";
+import { Text, Tag } from "./markup.mjs";
+
+export async function updateFileList() {
+  const fileInfos = await api.getFiles();
 
   const fileListView = document.querySelector(".file-list");
   RemoveAllChildren(fileListView);
@@ -10,7 +13,7 @@ async function UpdateFileList() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", UpdateFileList);
+window.addEventListener("DOMContentLoaded", updateFileList);
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
 function RemoveAllChildren(element) {
@@ -49,8 +52,8 @@ function CreateFileInfoView(fileInfo) {
         {
           class: "btn btn-outline-secondary align-self-start",
           onclick: async () => {
-            await deleteFile(fileInfo.Name);
-            await UpdateFileList();
+            await api.deleteFile(fileInfo.Name);
+            await updateFileList();
           },
         },
         [new Tag("i", { class: "bi-trash" })]
