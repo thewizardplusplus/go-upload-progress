@@ -33,7 +33,7 @@ function CreateFileInfoView(fileInfo) {
         ...CreateFilePropertyViews(
           "Size:",
           "bi-file-earmark",
-          new Text(FormatSize(fileInfo.Size))
+          new Text(FormatSize(fileInfo.SizeInB))
         ),
         ...CreateFilePropertyViews(
           "Modification time:",
@@ -70,9 +70,10 @@ function CreateFilePropertyViews(name, valueIcon, valueTag, isLast = false) {
   ];
 }
 
-function FormatSize(size) {
+function FormatSize(sizeInB) {
   const units = ["byte", "kilobyte", "megabyte", "gigabyte"];
 
+  let size = sizeInB;
   let unitIndex = 0;
   while (size > 1024) {
     size /= 1024;
