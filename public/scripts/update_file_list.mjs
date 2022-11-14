@@ -1,5 +1,5 @@
-import * as api from "./api.mjs";
-import { Tag, removeAllChildren } from "./markup.mjs";
+import * as api from "./libs/api.mjs";
+import { Tag, removeAllChildren } from "./libs/markup.mjs";
 import { FileInfoView } from "./components/FileInfoView.mjs";
 
 export async function updateFileList() {

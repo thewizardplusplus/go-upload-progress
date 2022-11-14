@@ -1,4 +1,4 @@
-import * as api from "./api.mjs";
+import * as api from "./libs/api.mjs";
 import { updateFileList } from "./update_file_list.mjs";
 
 window.addEventListener("DOMContentLoaded", () => {

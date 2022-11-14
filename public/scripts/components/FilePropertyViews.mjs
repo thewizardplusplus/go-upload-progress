@@ -1,4 +1,4 @@
-import { Text, Tag } from "../markup.mjs";
+import { Text, Tag } from "../libs/markup.mjs";
 
 export function FilePropertyViews(attributes) {
   return [

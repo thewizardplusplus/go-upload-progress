@@ -1,4 +1,4 @@
-import { Text, Tag } from "../markup.mjs";
+import { Text, Tag } from "../libs/markup.mjs";
 import { FilePropertyViews } from "./FilePropertyViews.mjs";
 
 const formatLocale = "en-US";
