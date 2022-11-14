@@ -22,8 +22,26 @@
       src="scripts/components/FilePropertyViews.mjs"
     ></script>
     <script type="module" src="scripts/components/FileInfoView.mjs"></script>
+    <script type="module" src="scripts/components/Toast.mjs"></script>
     <script type="module" src="scripts/update_file_list.mjs"></script>
     <script type="module" src="scripts/file_form.mjs"></script>
+    <script type="module">
+      // The test of the `Toast` component
+
+      import { Toast } from "./scripts/components/Toast.mjs";
+
+      const toastContainer = document.querySelector(".toast-container");
+      toastContainer.appendChild(
+        Toast({
+          colorStyle: "danger",
+          icon: "bi-x-octagon-fill",
+          title: "Error",
+          message: `Message #${Math.round(
+            Math.random() * Number.MAX_SAFE_INTEGER
+          )}.`,
+        }).toDOM()
+      );
+    </script>
 
     <title>go-upload-progress</title>
   </head>
@@ -56,6 +74,10 @@
       <hr />
 
       <ul class="file-list list-unstyled"></ul>
+
+      <div
+        class="toast-container fixed-top start-50 translate-middle-x m-3"
+      ></div>
     </div>
   </body>
 </html>
