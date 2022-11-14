@@ -1,9 +1,14 @@
-import { Text, Tag } from "../libs/markup.mjs";
+import { Text, Tag, removeElementByID } from "../libs/markup.mjs";
 
 export function Toast(attributes) {
+  const toastID = `toast-${attributes.id}`;
+  const timeoutID =
+    attributes.lifetimeInMs !== undefined
+      ? setTimeout(() => removeElementByID(toastID), attributes.lifetimeInMs)
+      : undefined;
   return new Tag(
     "div",
-    { class: `toast border-${attributes.colorStyle} show` },
+    { id: toastID, class: `toast border-${attributes.colorStyle} show` },
     [
       new Tag(
         "div",
@@ -21,11 +26,9 @@ export function Toast(attributes) {
           new Tag("button", {
             class: "btn-close",
             type: "button",
-            onclick: (event) => {
-              const closeButton = event.target;
-              const toastHeaderView = closeButton.parentElement;
-              const toastView = toastHeaderView.parentElement;
-              toastView.remove();
+            onclick: () => {
+              clearTimeout(timeoutID);
+              removeElementByID(toastID);
             },
           }),
         ]

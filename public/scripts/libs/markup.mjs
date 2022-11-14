@@ -54,6 +54,13 @@ export class Tag {
   }
 }
 
+export function removeElementByID(id) {
+  const element = document.getElementById(id);
+  if (element !== null) {
+    element.remove();
+  }
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
 export function removeAllChildren(element) {
   while (element.firstChild) {

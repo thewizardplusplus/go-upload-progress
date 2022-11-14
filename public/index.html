@@ -31,16 +31,21 @@
       import { Toast } from "./scripts/components/Toast.mjs";
 
       const toastContainer = document.querySelector(".toast-container");
-      toastContainer.appendChild(
-        Toast({
-          colorStyle: "danger",
-          icon: "bi-x-octagon-fill",
-          title: "Error",
-          message: `Message #${Math.round(
-            Math.random() * Number.MAX_SAFE_INTEGER
-          )}.`,
-        }).toDOM()
-      );
+      let toastCount = 0;
+      setInterval(() => {
+        toastContainer.appendChild(
+          Toast({
+            id: toastCount++,
+            colorStyle: "danger",
+            icon: "bi-x-octagon-fill",
+            title: "Error",
+            message: `Message #${Math.round(
+              Math.random() * Number.MAX_SAFE_INTEGER
+            )}.`,
+            lifetimeInMs: Math.random() * 8000 + 500,
+          }).toDOM()
+        );
+      }, 2000);
     </script>
 
     <title>go-upload-progress</title>
