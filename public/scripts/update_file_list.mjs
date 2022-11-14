@@ -1,5 +1,6 @@
 import * as api from "./api.mjs";
 import { Text, Tag, removeAllChildren } from "./markup.mjs";
+import { FilePropertyViews } from "./components/FilePropertyViews.mjs";
 
 export async function updateFileList() {
   const fileInfos = await api.getFiles();
@@ -19,26 +20,26 @@ function CreateFileInfoView(fileInfo) {
   return new Tag("div", { class: "card mb-3" }, [
     new Tag("div", { class: "card-body d-flex" }, [
       new Tag("dl", { class: "flex-grow-1 me-3 mb-0" }, [
-        ...CreateFilePropertyViews(
-          "Name:",
-          "bi-link",
-          new Tag("a", { href: `/files/${fileInfo.Name}` }, [
+        ...FilePropertyViews({
+          name: "Name:",
+          valueIcon: "bi-link",
+          valueTag: new Tag("a", { href: `/files/${fileInfo.Name}` }, [
             new Text(fileInfo.Name),
-          ])
-        ),
-        ...CreateFilePropertyViews(
-          "Size:",
-          "bi-file-earmark",
-          new Text(FormatSize(fileInfo.SizeInB))
-        ),
-        ...CreateFilePropertyViews(
-          "Modification time:",
-          "bi-calendar",
-          new Tag("time", { datetime: fileInfo.ModTime }, [
+          ]),
+        }),
+        ...FilePropertyViews({
+          name: "Size:",
+          valueIcon: "bi-file-earmark",
+          valueTag: new Text(FormatSize(fileInfo.SizeInB)),
+        }),
+        ...FilePropertyViews({
+          name: "Modification time:",
+          valueIcon: "bi-calendar",
+          valueTag: new Tag("time", { datetime: fileInfo.ModTime }, [
             new Text(FormatDatetime(fileInfo.ModTime)),
           ]),
-          true
-        ),
+          isLast: true,
+        }),
       ]),
       new Tag(
         "button",
@@ -53,17 +54,6 @@ function CreateFileInfoView(fileInfo) {
       ),
     ]),
   ]);
-}
-
-function CreateFilePropertyViews(name, valueIcon, valueTag, isLast = false) {
-  return [
-    new Tag("dt", [new Text(name)]),
-    new Tag("dd", isLast ? { class: "mb-0" } : undefined, [
-      new Tag("i", { class: valueIcon }),
-      new Text("\u00a0"),
-      valueTag,
-    ]),
-  ];
 }
 
 function FormatSize(sizeInB) {
