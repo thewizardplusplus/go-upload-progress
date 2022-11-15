@@ -27,34 +27,6 @@
     <script type="module" src="scripts/show_toast.mjs"></script>
     <script type="module" src="scripts/update_file_list.mjs"></script>
     <script type="module" src="scripts/file_form.mjs"></script>
-    <script type="module">
-      // The test of the `Toast` component
-
-      import { defaultToastKinds } from "./scripts/components/ToastKind.mjs";
-      import { showToast } from "./scripts/show_toast.mjs";
-      import { Text, Tag } from "./scripts/libs/markup.mjs";
-
-      const defaultToastKindEntries = Object.entries(defaultToastKinds).map(
-        ([_, value]) => value
-      );
-      setInterval(() => {
-        showToast(
-          defaultToastKindEntries[
-            Math.floor(Math.random() * defaultToastKindEntries.length)
-          ],
-          [
-            new Text("Message "),
-            new Tag("strong", [
-              new Text(
-                `#${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}`
-              ),
-            ]),
-            new Text("."),
-          ],
-          Math.random() * 8000 + 500
-        );
-      }, 2000);
-    </script>
 
     <title>go-upload-progress</title>
   </head>
