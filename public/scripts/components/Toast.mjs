@@ -8,20 +8,23 @@ export function Toast(attributes) {
       : undefined;
   return new Tag(
     "div",
-    { id: toastID, class: `toast border-${attributes.colorStyle} show` },
+    {
+      id: toastID,
+      class: `toast border-${attributes.toastKind.colorStyle} show`,
+    },
     [
       new Tag(
         "div",
-        { class: `toast-header border-${attributes.colorStyle}` },
+        { class: `toast-header border-${attributes.toastKind.colorStyle}` },
         [
           new Tag("i", {
-            class: `${attributes.icon} text-${attributes.colorStyle}`,
+            class: `${attributes.toastKind.icon} text-${attributes.toastKind.colorStyle}`,
           }),
           new Text("\u00a0"),
           new Tag(
             "strong",
-            { class: `text-${attributes.colorStyle} flex-grow-1` },
-            [new Text(attributes.title)]
+            { class: `text-${attributes.toastKind.colorStyle} flex-grow-1` },
+            [new Text(attributes.toastKind.title)]
           ),
           new Tag("button", {
             class: "btn-close",

@@ -22,6 +22,7 @@
       src="scripts/components/FilePropertyViews.mjs"
     ></script>
     <script type="module" src="scripts/components/FileInfoView.mjs"></script>
+    <script type="module" src="scripts/components/ToastKind.mjs"></script>
     <script type="module" src="scripts/components/Toast.mjs"></script>
     <script type="module" src="scripts/update_file_list.mjs"></script>
     <script type="module" src="scripts/file_form.mjs"></script>
@@ -29,6 +30,7 @@
       // The test of the `Toast` component
 
       import { Toast } from "./scripts/components/Toast.mjs";
+      import { ToastKind } from "./scripts/components/ToastKind.mjs";
 
       const toastContainer = document.querySelector(".toast-container");
       let toastCount = 0;
@@ -36,9 +38,7 @@
         toastContainer.appendChild(
           Toast({
             id: toastCount++,
-            colorStyle: "danger",
-            icon: "bi-x-octagon-fill",
-            title: "Error",
+            toastKind: new ToastKind("danger", "bi-x-octagon-fill", "Error"),
             message: `Message #${Math.round(
               Math.random() * Number.MAX_SAFE_INTEGER
             )}.`,
