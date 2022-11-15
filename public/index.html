@@ -24,32 +24,25 @@
     <script type="module" src="scripts/components/FileInfoView.mjs"></script>
     <script type="module" src="scripts/components/ToastKind.mjs"></script>
     <script type="module" src="scripts/components/Toast.mjs"></script>
+    <script type="module" src="scripts/show_toast.mjs"></script>
     <script type="module" src="scripts/update_file_list.mjs"></script>
     <script type="module" src="scripts/file_form.mjs"></script>
     <script type="module">
       // The test of the `Toast` component
 
-      import { Toast } from "./scripts/components/Toast.mjs";
       import { defaultToastKinds } from "./scripts/components/ToastKind.mjs";
+      import { showToast } from "./scripts/show_toast.mjs";
 
-      const toastContainer = document.querySelector(".toast-container");
       const defaultToastKindEntries = Object.entries(defaultToastKinds).map(
         ([_, value]) => value
       );
-      let toastCount = 0;
       setInterval(() => {
-        toastContainer.appendChild(
-          Toast({
-            id: toastCount++,
-            toastKind:
-              defaultToastKindEntries[
-                Math.floor(Math.random() * defaultToastKindEntries.length)
-              ],
-            message: `Message #${Math.round(
-              Math.random() * Number.MAX_SAFE_INTEGER
-            )}.`,
-            lifetimeInMs: Math.random() * 8000 + 500,
-          }).toDOM()
+        showToast(
+          defaultToastKindEntries[
+            Math.floor(Math.random() * defaultToastKindEntries.length)
+          ],
+          `Message #${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}.`,
+          Math.random() * 8000 + 500
         );
       }, 2000);
     </script>
