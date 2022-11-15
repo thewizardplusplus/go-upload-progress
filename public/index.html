@@ -30,15 +30,21 @@
       // The test of the `Toast` component
 
       import { Toast } from "./scripts/components/Toast.mjs";
-      import { ToastKind } from "./scripts/components/ToastKind.mjs";
+      import { defaultToastKinds } from "./scripts/components/ToastKind.mjs";
 
       const toastContainer = document.querySelector(".toast-container");
+      const defaultToastKindEntries = Object.entries(defaultToastKinds).map(
+        ([_, value]) => value
+      );
       let toastCount = 0;
       setInterval(() => {
         toastContainer.appendChild(
           Toast({
             id: toastCount++,
-            toastKind: new ToastKind("danger", "bi-x-octagon-fill", "Error"),
+            toastKind:
+              defaultToastKindEntries[
+                Math.floor(Math.random() * defaultToastKindEntries.length)
+              ],
             message: `Message #${Math.round(
               Math.random() * Number.MAX_SAFE_INTEGER
             )}.`,

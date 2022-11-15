@@ -31,3 +31,9 @@ export class ToastKind {
     return this.#title;
   }
 }
+
+export const defaultToastKinds = Object.freeze({
+  info: new ToastKind("info", "bi-info-square-fill", "Information"),
+  warn: new ToastKind("warning", "bi-exclamation-triangle-fill", "Warning"),
+  error: new ToastKind("danger", "bi-x-octagon-fill", "Error"),
+});
