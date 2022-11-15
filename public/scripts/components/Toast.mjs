@@ -7,41 +7,47 @@ export function Toast(attributes) {
   attributes = { lifetimeInMs: defaultToastLifetimeInMs, ...attributes };
 
   const toastID = `toast-${attributes.id}`;
-  const timeoutID =
+  const removalTimeoutID =
     attributes.lifetimeInMs !== immortalToastLifetimeInMs
       ? setTimeout(() => removeElementByID(toastID), attributes.lifetimeInMs)
       : undefined;
+  const body =
+    typeof attributes.body === "string" || attributes.body instanceof String
+      ? [new Text(attributes.body)]
+      : !Array.isArray(attributes.body)
+      ? [attributes.body]
+      : attributes.body;
   return new Tag(
     "div",
     {
       id: toastID,
-      class: `toast border-${attributes.toastKind.colorStyle} show`,
+      class: `toast border-${attributes.kind.colorStyle} show`,
     },
     [
       new Tag(
         "div",
-        { class: `toast-header border-${attributes.toastKind.colorStyle}` },
+        { class: `toast-header border-${attributes.kind.colorStyle}` },
         [
           new Tag("i", {
-            class: `${attributes.toastKind.icon} text-${attributes.toastKind.colorStyle}`,
+            class: `${attributes.kind.icon} text-${attributes.kind.colorStyle}`,
           }),
           new Text("\u00a0"),
           new Tag(
             "strong",
-            { class: `text-${attributes.toastKind.colorStyle} flex-grow-1` },
-            [new Text(attributes.toastKind.title)]
+            { class: `text-${attributes.kind.colorStyle} flex-grow-1` },
+            [new Text(attributes.kind.title)]
           ),
           new Tag("button", {
             class: "btn-close",
             type: "button",
             onclick: () => {
-              clearTimeout(timeoutID);
+              clearTimeout(removalTimeoutID);
               removeElementByID(toastID);
             },
           }),
         ]
       ),
-      new Tag("div", { class: "toast-body" }, [new Text(attributes.message)]),
+      new Tag("div", { class: "toast-body" }, body),
     ]
   );
 }
