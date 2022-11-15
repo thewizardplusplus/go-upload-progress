@@ -1,9 +1,14 @@
 import { Text, Tag, removeElementByID } from "../libs/markup.mjs";
 
+export const immortalToastLifetimeInMs = 0;
+export const defaultToastLifetimeInMs = 2000;
+
 export function Toast(attributes) {
+  attributes = { lifetimeInMs: defaultToastLifetimeInMs, ...attributes };
+
   const toastID = `toast-${attributes.id}`;
   const timeoutID =
-    attributes.lifetimeInMs !== undefined
+    attributes.lifetimeInMs !== immortalToastLifetimeInMs
       ? setTimeout(() => removeElementByID(toastID), attributes.lifetimeInMs)
       : undefined;
   return new Tag(

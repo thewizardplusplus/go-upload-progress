@@ -1,8 +1,12 @@
-import { Toast } from "./components/Toast.mjs";
+import { Toast, defaultToastLifetimeInMs } from "./components/Toast.mjs";
 
 let globalToastCount = 0;
 
-export function showToast(toastKind, message, lifetimeInMs) {
+export function showToast(
+  toastKind,
+  message,
+  lifetimeInMs = defaultToastLifetimeInMs
+) {
   const toastID = globalToastCount++;
   const toast = Toast({ id: toastID, toastKind, message, lifetimeInMs });
 
