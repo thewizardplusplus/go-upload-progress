@@ -21,5 +21,3 @@ export async function updateFileList() {
     fileListView.appendChild(fileInfoView.toDOM());
   });
 }
-
-window.addEventListener("DOMContentLoaded", updateFileList);

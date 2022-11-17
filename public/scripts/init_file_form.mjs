@@ -4,15 +4,16 @@ import { defaultToastKinds } from "./components/ToastKind.mjs";
 import { Text, Tag } from "./libs/markup.mjs";
 import { updateFileList } from "./update_file_list.mjs";
 
-window.addEventListener("DOMContentLoaded", () => {
+export function initFileForm() {
   const fileForm = document.querySelector(".file-form");
   fileForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    const fileInput = fileForm.elements.file;
     await api.saveFile(new FormData(fileForm));
     showToast(defaultToastKinds.info, [
       new Text("The "),
-      new Tag("code", [new Text(fileForm.elements.file.files[0].name)]),
+      new Tag("code", [new Text(fileInput.files[0].name)]),
       new Text(" file was successfully uploaded."),
     ]);
 
@@ -24,4 +25,4 @@ window.addEventListener("DOMContentLoaded", () => {
     await api.deleteFiles();
     await updateFileList();
   });
-});
+}
