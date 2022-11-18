@@ -11,12 +11,6 @@ export function Toast(attributes) {
     attributes.lifetimeInMs !== immortalToastLifetimeInMs
       ? setTimeout(() => removeElementByID(toastID), attributes.lifetimeInMs)
       : undefined;
-  const body =
-    typeof attributes.body === "string" || attributes.body instanceof String
-      ? [new Text(attributes.body)]
-      : !Array.isArray(attributes.body)
-      ? [attributes.body]
-      : attributes.body;
   return new Tag(
     "div",
     {
@@ -47,7 +41,21 @@ export function Toast(attributes) {
           }),
         ]
       ),
-      new Tag("div", { class: "toast-body" }, body),
+      new Tag(
+        "div",
+        { class: "toast-body" },
+        wrapToastBodyIfNecessary(attributes.body)
+      ),
     ]
   );
+}
+
+function wrapToastBodyIfNecessary(body) {
+  if (typeof body === "string" || body instanceof String) {
+    return [new Text(body)];
+  }
+  if (!Array.isArray(body)) {
+    return [body];
+  }
+  return body;
 }
