@@ -48,7 +48,7 @@ export function FileInfoView(attributes) {
 function formatSize(sizeInB) {
   let size = sizeInB;
   let unitIndex = 0;
-  while (size > 1024) {
+  while (size >= 1024) {
     size /= 1024;
     unitIndex++;
   }
