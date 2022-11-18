@@ -11,8 +11,12 @@ export function initFileForm() {
     await withErrorDisplaying(async () => {
       event.preventDefault();
 
+      await api.saveFile(new FormData(fileForm), ({ loaded, total }) => {
+        const progressInPercent = Math.round((loaded / total) * 100);
+        console.log(`upload progress: ${progressInPercent}%`);
+      });
+
       const fileInput = fileForm.elements.file;
-      await api.saveFile(new FormData(fileForm));
       showToast(defaultToastKinds.info, [
         new Text("The "),
         new Tag("code", [new Text(fileInput.files[0].name)]),

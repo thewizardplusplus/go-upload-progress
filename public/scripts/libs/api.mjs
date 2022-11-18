@@ -7,7 +7,7 @@ export async function getFiles() {
   return await response.json();
 }
 
-export async function saveFile(formData) {
+export async function saveFile(formData, progressEventHandler) {
   return new Promise((resolve, reject) => {
     const rejectWithError = (errMessage) => {
       reject(new Error(errMessage));
@@ -25,6 +25,14 @@ export async function saveFile(formData) {
     request.addEventListener("error", () => {
       rejectWithError("network error");
     });
+
+    if (progressEventHandler !== undefined) {
+      request.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          progressEventHandler({ loaded: event.loaded, total: event.total });
+        }
+      });
+    }
 
     request.open("POST", fileAPIRoute);
     request.send(formData);
