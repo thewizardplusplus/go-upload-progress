@@ -18,13 +18,15 @@ export function initFileForm() {
       allControls.setAttribute("disabled", "");
       progressView.show();
 
-      progressView.setProgress(0);
-      await api.saveFile(formData, ({ loaded, total }) => {
-        progressView.setProgress(loaded / total);
-      });
-
-      progressView.hide();
-      allControls.removeAttribute("disabled");
+      try {
+        progressView.setProgress(0);
+        await api.saveFile(formData, ({ loaded, total }) => {
+          progressView.setProgress(loaded / total);
+        });
+      } finally {
+        progressView.hide();
+        allControls.removeAttribute("disabled");
+      }
 
       const fileInput = fileForm.elements.file;
       showToast(defaultToastKinds.info, [
