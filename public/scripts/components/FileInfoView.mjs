@@ -27,9 +27,11 @@ export function FileInfoView(attributes) {
         ...FilePropertyViews({
           name: "Modification time:",
           valueIcon: "bi-calendar",
-          valueTag: new Tag("time", { datetime: attributes.fileInfo.ModTime }, [
-            new Text(formatDatetime(attributes.fileInfo.ModTime)),
-          ]),
+          valueTag: new Tag(
+            "time",
+            { datetime: attributes.fileInfo.ModificationTime },
+            [new Text(formatDatetime(attributes.fileInfo.ModificationTime))]
+          ),
           isLast: true,
         }),
       ]),
