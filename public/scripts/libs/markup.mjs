@@ -1,69 +1,69 @@
-const eventAttributePrefix = "on";
+const eventAttributePrefix = 'on'
 
 export class Text {
-  #text = "";
+  #text = ''
 
   constructor(text) {
-    this.#text = text ?? this.#text;
+    this.#text = text ?? this.#text
   }
 
   toDOM() {
-    return document.createTextNode(this.#text);
+    return document.createTextNode(this.#text)
   }
 }
 
 export class Tag {
-  #name;
-  #attributes = {};
-  #children = [];
+  #name
+  #attributes = {}
+  #children = []
 
   constructor(name, attributes, children) {
     if (name === undefined) {
-      throw new Error("tag name is required");
+      throw new Error('tag name is required')
     }
     // support for a call with only two arguments: a name and children
     if (children === undefined && Array.isArray(attributes)) {
-      children = attributes;
-      attributes = undefined;
+      children = attributes
+      attributes = undefined
     }
 
-    this.#name = name;
-    this.#attributes = attributes ?? this.#attributes;
-    this.#children = children ?? this.#children;
+    this.#name = name
+    this.#attributes = attributes ?? this.#attributes
+    this.#children = children ?? this.#children
   }
 
   toDOM() {
-    const element = document.createElement(this.#name);
+    const element = document.createElement(this.#name)
 
     Object.entries(this.#attributes).forEach(([name, value]) => {
       if (name.startsWith(eventAttributePrefix)) {
-        const eventName = name.slice(eventAttributePrefix.length);
-        element.addEventListener(eventName, value);
+        const eventName = name.slice(eventAttributePrefix.length)
+        element.addEventListener(eventName, value)
 
-        return;
+        return
       }
 
-      element.setAttribute(name, value);
-    });
+      element.setAttribute(name, value)
+    })
 
-    this.#children.forEach((child) => {
-      element.appendChild(child.toDOM());
-    });
+    this.#children.forEach(child => {
+      element.appendChild(child.toDOM())
+    })
 
-    return element;
+    return element
   }
 }
 
 export function removeElementByID(id) {
-  const element = document.getElementById(id);
+  const element = document.getElementById(id)
   if (element !== null) {
-    element.remove();
+    element.remove()
   }
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
 export function removeAllChildren(element) {
   while (element.firstChild) {
-    element.removeChild(element.firstChild);
+    element.removeChild(element.firstChild)
   }
 }

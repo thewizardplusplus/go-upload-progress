@@ -1,11 +1,11 @@
-version: "3"
+version: '3'
 services:
   go-upload-progress:
     build: .
     environment:
-      SERVER_ADDRESS: ":8080"
-      PUBLIC_FILE_DIR: "/opt/go-upload-progress/public"
-      UPLOADED_FILE_DIR: "/opt/go-upload-progress/files"
+      SERVER_ADDRESS: ':8080'
+      PUBLIC_FILE_DIR: '/opt/go-upload-progress/public'
+      UPLOADED_FILE_DIR: '/opt/go-upload-progress/files'
     ports:
       - 8080:8080
     volumes:

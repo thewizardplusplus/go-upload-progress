@@ -8,4 +8,4 @@ issues:
   exclude-rules:
     - linters:
         - lll
-      source: "^//go:generate "
+      source: '^//go:generate '
