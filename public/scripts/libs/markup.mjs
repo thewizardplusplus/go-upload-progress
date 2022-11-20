@@ -1,6 +1,10 @@
 const eventAttributePrefix = 'on'
 
 export class Text {
+  static get nonBreakingSpace() {
+    return new Text('\u00a0')
+  }
+
   #text = ''
 
   constructor(text) {

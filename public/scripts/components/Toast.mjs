@@ -25,7 +25,7 @@ export function Toast(attributes) {
           new Tag('i', {
             class: `${attributes.kind.icon} text-${attributes.kind.colorStyle}`,
           }),
-          new Text('\u00a0'),
+          Text.nonBreakingSpace,
           new Tag(
             'strong',
             { class: `text-${attributes.kind.colorStyle} flex-grow-1` },

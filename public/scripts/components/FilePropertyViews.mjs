@@ -5,7 +5,7 @@ export function FilePropertyViews(attributes) {
     new Tag('dt', [new Text(attributes.name)]),
     new Tag('dd', attributes.isLast ? { class: 'mb-0' } : undefined, [
       new Tag('i', { class: attributes.valueIcon }),
-      new Text('\u00a0'),
+      Text.nonBreakingSpace,
       attributes.valueTag,
     ]),
   ]
