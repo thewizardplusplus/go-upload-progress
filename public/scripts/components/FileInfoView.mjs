@@ -14,11 +14,9 @@ export function FileInfoView(attributes) {
         ...FilePropertyViews({
           name: 'name',
           valueIconName: 'link',
-          valueTag: new Tag(
-            'a',
-            { href: `/files/${attributes.fileInfo.Name}` },
-            [new Text(attributes.fileInfo.Name)],
-          ),
+          valueTag: new Tag('a', { href: '/files/' + attributes.fileInfo.Name }, [
+            new Text(attributes.fileInfo.Name),
+          ]),
         }),
         ...FilePropertyViews({
           name: 'size',
@@ -28,11 +26,9 @@ export function FileInfoView(attributes) {
         ...FilePropertyViews({
           name: 'modification time',
           valueIconName: 'calendar',
-          valueTag: new Tag(
-            'time',
-            { datetime: attributes.fileInfo.ModificationTime },
-            [new Text(formatDatetime(attributes.fileInfo.ModificationTime))],
-          ),
+          valueTag: new Tag('time', { datetime: attributes.fileInfo.ModificationTime }, [
+            new Text(formatDatetime(attributes.fileInfo.ModificationTime)),
+          ]),
           isLast: true,
         }),
       ]),

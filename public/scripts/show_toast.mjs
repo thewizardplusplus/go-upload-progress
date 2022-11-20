@@ -1,25 +1,25 @@
-import { Toast, defaultToastLifetimeInMs } from './components/Toast.mjs'
+import { ToastKind, ToastView, defaultToastLifetimeInMs } from './components/ToastView.mjs'
 import { capitalizeFirstLetter } from './libs/markup.mjs'
-import { defaultToastKinds } from './components/ToastKind.mjs'
 
 let globalToastCount = 0
 
 export function showToast(kind, body, lifetimeInMs = defaultToastLifetimeInMs) {
   const id = globalToastCount++
-  const toast = Toast({ id, kind, body, lifetimeInMs })
+  const toastView = ToastView({ id, kind, body, lifetimeInMs })
 
   const toastContainer = document.querySelector('.toast-container')
-  toastContainer.appendChild(toast.toDOM())
+  toastContainer.appendChild(toastView.toDOM())
 }
 
 export async function withErrorDisplaying(baseHandler) {
   try {
     await baseHandler()
   } catch (err) {
-    const trimmedErrMessage = err.message.trim()
-    const errMessageAsSentence =
-      capitalizeFirstLetter(trimmedErrMessage) +
-      (!trimmedErrMessage.endsWith('.') ? '.' : '')
-    showToast(defaultToastKinds.error, errMessageAsSentence)
+    showToast(ToastKind.error, formatErrMessage(err.message))
   }
+}
+
+function formatErrMessage(errMessage) {
+  const trimmedErrMessage = errMessage.trim()
+  return capitalizeFirstLetter(trimmedErrMessage) + (!trimmedErrMessage.endsWith('.') ? '.' : '')
 }

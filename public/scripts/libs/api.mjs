@@ -2,7 +2,7 @@ const fileAPIRoute = '/api/v1/files'
 
 export async function getFiles() {
   const response = await fetch(fileAPIRoute)
-  await checkResponse(response)
+  await throwOnUnsuccessfulResponse(response)
 
   return await response.json()
 }
@@ -44,15 +44,15 @@ export async function deleteFile(filename) {
   const response = await fetch(`${fileAPIRoute}?${params}`, {
     method: 'DELETE',
   })
-  await checkResponse(response)
+  await throwOnUnsuccessfulResponse(response)
 }
 
 export async function deleteFiles() {
   const response = await fetch(fileAPIRoute, { method: 'DELETE' })
-  await checkResponse(response)
+  await throwOnUnsuccessfulResponse(response)
 }
 
-async function checkResponse(response) {
+async function throwOnUnsuccessfulResponse(response) {
   if (response.ok) {
     return
   }

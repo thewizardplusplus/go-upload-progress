@@ -13,7 +13,7 @@ export async function updateFileList() {
     removeAllChildren(fileListView)
 
     fileInfos.forEach(fileInfo => {
-      const fileInfoView = new Tag('li', [
+      const fileListItemView = new Tag('li', [
         FileInfoView({
           fileInfo,
           onFileDeleting: async () => {
@@ -24,23 +24,22 @@ export async function updateFileList() {
           },
         }),
       ])
-      fileListView.appendChild(fileInfoView.toDOM())
+      fileListView.appendChild(fileListItemView.toDOM())
     })
   })
 }
 
 export async function startFileListUpdating() {
   while (true) {
-    const startUnixTimeInMs = new Date().getTime()
+    const startUnixTimeInMs = getCurrentUnixTimeInMs()
     await updateFileList()
 
-    const elapsedTimeInMs = new Date().getTime() - startUnixTimeInMs
-    const fileListUpdatingTimeout = Math.max(
-      defaultFileListUpdatingTimeout - elapsedTimeInMs,
-      0,
-    )
-    await new Promise(resolve => {
-      setTimeout(resolve, fileListUpdatingTimeout)
-    })
+    const elapsedTimeInMs = getCurrentUnixTimeInMs() - startUnixTimeInMs
+    const fileListUpdatingTimeout = Math.max(0, defaultFileListUpdatingTimeout - elapsedTimeInMs)
+    await new Promise(resolve => setTimeout(resolve, fileListUpdatingTimeout))
   }
+}
+
+function getCurrentUnixTimeInMs() {
+  return new Date().getTime()
 }
