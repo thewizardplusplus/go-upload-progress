@@ -1,5 +1,6 @@
 import { Text, Tag } from '../libs/markup.mjs'
 import { FilePropertyViews } from './FilePropertyViews.mjs'
+import { IconView } from './IconView.mjs'
 
 const formatLocale = 'en-US'
 const sizeFormatOptions = { style: 'unit' }
@@ -12,7 +13,7 @@ export function FileInfoView(attributes) {
       new Tag('dl', { class: 'flex-grow-1 me-3 mb-0' }, [
         ...FilePropertyViews({
           name: 'Name:',
-          valueIcon: 'bi-link',
+          valueIconName: 'link',
           valueTag: new Tag(
             'a',
             { href: `/files/${attributes.fileInfo.Name}` },
@@ -21,12 +22,12 @@ export function FileInfoView(attributes) {
         }),
         ...FilePropertyViews({
           name: 'Size:',
-          valueIcon: 'bi-file-earmark',
+          valueIconName: 'file-earmark',
           valueTag: new Text(formatSize(attributes.fileInfo.SizeInB)),
         }),
         ...FilePropertyViews({
           name: 'Modification time:',
-          valueIcon: 'bi-calendar',
+          valueIconName: 'calendar',
           valueTag: new Tag(
             'time',
             { datetime: attributes.fileInfo.ModificationTime },
@@ -41,7 +42,7 @@ export function FileInfoView(attributes) {
           class: 'btn btn-outline-secondary align-self-start',
           onclick: attributes.onFileDeleting,
         },
-        [new Tag('i', { class: 'bi-trash' })],
+        [IconView({ iconName: 'trash' })],
       ),
     ]),
   ])

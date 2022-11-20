@@ -1,4 +1,5 @@
 import { Text, Tag, removeElementByID } from '../libs/markup.mjs'
+import { IconView } from './IconView.mjs'
 
 export const immortalToastLifetimeInMs = 0
 export const defaultToastLifetimeInMs = 2000
@@ -22,8 +23,9 @@ export function Toast(attributes) {
         'div',
         { class: `toast-header border-${attributes.kind.colorStyle}` },
         [
-          new Tag('i', {
-            class: `${attributes.kind.icon} text-${attributes.kind.colorStyle}`,
+          IconView({
+            iconName: attributes.kind.iconName,
+            colorStyle: attributes.kind.colorStyle,
           }),
           Text.nonBreakingSpace,
           new Tag(

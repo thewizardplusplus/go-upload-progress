@@ -1,21 +1,21 @@
 export class ToastKind {
   #colorStyle
-  #icon
+  #iconName
   #title
 
-  constructor(colorStyle, icon, title) {
+  constructor(colorStyle, iconName, title) {
     if (colorStyle === undefined) {
       throw new Error('toast color style is required')
     }
-    if (icon === undefined) {
-      throw new Error('toast icon is required')
+    if (iconName === undefined) {
+      throw new Error('toast icon name is required')
     }
     if (title === undefined) {
       throw new Error('toast title is required')
     }
 
     this.#colorStyle = colorStyle
-    this.#icon = icon
+    this.#iconName = iconName
     this.#title = title
   }
 
@@ -23,8 +23,8 @@ export class ToastKind {
     return this.#colorStyle
   }
 
-  get icon() {
-    return this.#icon
+  get iconName() {
+    return this.#iconName
   }
 
   get title() {
@@ -33,7 +33,7 @@ export class ToastKind {
 }
 
 export const defaultToastKinds = Object.freeze({
-  info: new ToastKind('info', 'bi-info-square-fill', 'Information'),
-  warn: new ToastKind('warning', 'bi-exclamation-triangle-fill', 'Warning'),
-  error: new ToastKind('danger', 'bi-x-octagon-fill', 'Error'),
+  info: new ToastKind('info', 'info-square-fill', 'Information'),
+  warn: new ToastKind('warning', 'exclamation-triangle-fill', 'Warning'),
+  error: new ToastKind('danger', 'x-octagon-fill', 'Error'),
 })
