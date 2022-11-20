@@ -33,7 +33,7 @@ export class ToastKind {
 }
 
 export const defaultToastKinds = Object.freeze({
-  info: new ToastKind('info', 'info-square-fill', 'Information'),
-  warn: new ToastKind('warning', 'exclamation-triangle-fill', 'Warning'),
-  error: new ToastKind('danger', 'x-octagon-fill', 'Error'),
+  info: new ToastKind('info', 'info-square-fill', 'information'),
+  warn: new ToastKind('warning', 'exclamation-triangle-fill', 'warning'),
+  error: new ToastKind('danger', 'x-octagon-fill', 'error'),
 })

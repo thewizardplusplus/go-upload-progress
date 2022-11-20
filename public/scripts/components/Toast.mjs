@@ -1,4 +1,9 @@
-import { Text, Tag, removeElementByID } from '../libs/markup.mjs'
+import {
+  Text,
+  Tag,
+  removeElementByID,
+  capitalizeFirstLetter,
+} from '../libs/markup.mjs'
 import { IconView } from './IconView.mjs'
 
 export const immortalToastLifetimeInMs = 0
@@ -31,7 +36,7 @@ export function Toast(attributes) {
           new Tag(
             'strong',
             { class: `text-${attributes.kind.colorStyle} flex-grow-1` },
-            [new Text(attributes.kind.title)],
+            [new Text(capitalizeFirstLetter(attributes.kind.title))],
           ),
           new Tag('button', {
             class: 'btn-close',
