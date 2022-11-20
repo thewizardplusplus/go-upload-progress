@@ -71,3 +71,7 @@ export function removeAllChildren(element) {
     element.removeChild(element.firstChild)
   }
 }
+
+export function capitalizeFirstLetter(text) {
+  return text.at(0).toUpperCase() + text.slice(1)
+}

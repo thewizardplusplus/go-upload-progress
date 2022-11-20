@@ -1,4 +1,5 @@
 import { Toast, defaultToastLifetimeInMs } from './components/Toast.mjs'
+import { capitalizeFirstLetter } from './libs/markup.mjs'
 import { defaultToastKinds } from './components/ToastKind.mjs'
 
 let globalToastCount = 0
@@ -17,8 +18,7 @@ export async function withErrorDisplaying(baseHandler) {
   } catch (err) {
     const trimmedErrMessage = err.message.trim()
     const errMessageAsSentence =
-      trimmedErrMessage.at(0).toUpperCase() +
-      trimmedErrMessage.slice(1) +
+      capitalizeFirstLetter(trimmedErrMessage) +
       (!trimmedErrMessage.endsWith('.') ? '.' : '')
     showToast(defaultToastKinds.error, errMessageAsSentence)
   }

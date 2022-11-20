@@ -12,7 +12,7 @@ export function FileInfoView(attributes) {
     new Tag('div', { class: 'card-body d-flex' }, [
       new Tag('dl', { class: 'flex-grow-1 me-3 mb-0' }, [
         ...FilePropertyViews({
-          name: 'Name:',
+          name: 'name',
           valueIconName: 'link',
           valueTag: new Tag(
             'a',
@@ -21,12 +21,12 @@ export function FileInfoView(attributes) {
           ),
         }),
         ...FilePropertyViews({
-          name: 'Size:',
+          name: 'size',
           valueIconName: 'file-earmark',
           valueTag: new Text(formatSize(attributes.fileInfo.SizeInB)),
         }),
         ...FilePropertyViews({
-          name: 'Modification time:',
+          name: 'modification time',
           valueIconName: 'calendar',
           valueTag: new Tag(
             'time',
