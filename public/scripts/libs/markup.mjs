@@ -58,6 +58,22 @@ export class Tag {
   }
 }
 
+export function capitalizeFirstLetter(text) {
+  return text.at(0).toUpperCase() + text.slice(1)
+}
+
+export function transformToChildren(entity) {
+  if (typeof entity === 'string' || entity instanceof String) {
+    return [new Text(entity)]
+  }
+
+  if (!Array.isArray(entity)) {
+    return [entity]
+  }
+
+  return entity
+}
+
 export function removeElementByID(id) {
   const element = document.getElementById(id)
   if (element !== null) {
@@ -70,8 +86,4 @@ export function removeAllChildren(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild)
   }
-}
-
-export function capitalizeFirstLetter(text) {
-  return text.at(0).toUpperCase() + text.slice(1)
 }

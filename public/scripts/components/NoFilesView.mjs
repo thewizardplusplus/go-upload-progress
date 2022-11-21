@@ -1,10 +1,8 @@
-import { Text, Tag } from '../libs/markup.mjs'
-import { IconView } from './IconView.mjs'
+import { Tag } from '../libs/markup.mjs'
+import { IconWithTextViews } from './IconWithTextViews.mjs'
 
 export function NoFilesView() {
   return new Tag('p', { class: 'text-muted' }, [
-    IconView({ iconName: 'file-earmark-x' }),
-    Text.nonBreakingSpace,
-    new Text('No files'),
+    ...IconWithTextViews({ iconName: 'file-earmark-x', text: 'No files' }),
   ])
 }

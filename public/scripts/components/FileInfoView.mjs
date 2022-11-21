@@ -14,19 +14,19 @@ export function FileInfoView(attributes) {
         ...FilePropertyViews({
           name: 'name',
           valueIconName: 'link',
-          valueTag: new Tag('a', { href: '/files/' + attributes.fileInfo.Name }, [
+          valueText: new Tag('a', { href: '/files/' + attributes.fileInfo.Name }, [
             new Text(attributes.fileInfo.Name),
           ]),
         }),
         ...FilePropertyViews({
           name: 'size',
           valueIconName: 'file-earmark',
-          valueTag: new Text(formatSize(attributes.fileInfo.SizeInB)),
+          valueText: formatSize(attributes.fileInfo.SizeInB),
         }),
         ...FilePropertyViews({
           name: 'modification time',
           valueIconName: 'calendar',
-          valueTag: new Tag('time', { datetime: attributes.fileInfo.ModificationTime }, [
+          valueText: new Tag('time', { datetime: attributes.fileInfo.ModificationTime }, [
             new Text(formatDatetime(attributes.fileInfo.ModificationTime)),
           ]),
           isLast: true,
@@ -38,7 +38,7 @@ export function FileInfoView(attributes) {
           class: 'btn btn-outline-secondary align-self-start',
           onclick: attributes.onFileDeleting,
         },
-        [IconView({ iconName: 'trash' })],
+        [IconView({ name: 'trash' })],
       ),
     ]),
   ])

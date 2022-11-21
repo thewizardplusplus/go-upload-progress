@@ -1,5 +1,11 @@
-import { Text, Tag, removeElementByID, capitalizeFirstLetter } from '../libs/markup.mjs'
-import { IconView } from './IconView.mjs'
+import {
+  Text,
+  Tag,
+  capitalizeFirstLetter,
+  transformToChildren,
+  removeElementByID,
+} from '../libs/markup.mjs'
+import { IconWithTextViews } from './IconWithTextViews.mjs'
 
 export const immortalToastLifetimeInMs = 0
 export const defaultToastLifetimeInMs = 2000
@@ -61,14 +67,13 @@ export function ToastView(attributes) {
 
   return new Tag('div', { id: toastID, class: `toast ${borderColorStyleClass} show` }, [
     new Tag('div', { class: `toast-header ${borderColorStyleClass}` }, [
-      IconView({
+      ...IconWithTextViews({
         iconName: attributes.kind.iconName,
-        colorStyle: attributes.kind.colorStyle,
+        iconColorStyle: attributes.kind.colorStyle,
+        text: new Tag('strong', { class: `${textColorStyleClass} flex-grow-1` }, [
+          new Text(capitalizeFirstLetter(attributes.kind.title)),
+        ]),
       }),
-      Text.nonBreakingSpace,
-      new Tag('strong', { class: `${textColorStyleClass} flex-grow-1` }, [
-        new Text(capitalizeFirstLetter(attributes.kind.title)),
-      ]),
       new Tag('button', {
         class: 'btn-close',
         type: 'button',
@@ -78,7 +83,7 @@ export function ToastView(attributes) {
         },
       }),
     ]),
-    new Tag('div', { class: 'toast-body' }, wrapToastBody(attributes.body)),
+    new Tag('div', { class: 'toast-body' }, transformToChildren(attributes.body)),
   ])
 }
 
@@ -88,16 +93,4 @@ function setToastRemovalTimeout(toastID, toastLifetimeInMs) {
   }
 
   return setTimeout(() => removeElementByID(toastID), toastLifetimeInMs)
-}
-
-function wrapToastBody(body) {
-  if (typeof body === 'string' || body instanceof String) {
-    return [new Text(body)]
-  }
-
-  if (!Array.isArray(body)) {
-    return [body]
-  }
-
-  return body
 }
