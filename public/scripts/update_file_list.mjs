@@ -1,6 +1,7 @@
 import { withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { Tag, removeAllChildren } from './libs/markup.mjs'
+import { NoFilesView } from './components/NoFilesView.mjs'
 import { FileInfoView } from './components/FileInfoView.mjs'
 
 const defaultFileListUpdatingTimeout = 1000
@@ -11,6 +12,13 @@ export async function updateFileList() {
 
     const fileListView = document.querySelector('.file-list')
     removeAllChildren(fileListView)
+
+    if (fileInfos.length === 0) {
+      const fileListItemView = new Tag('li', [NoFilesView()])
+      fileListView.appendChild(fileListItemView.toDOM())
+
+      return
+    }
 
     fileInfos.forEach(fileInfo => {
       const fileListItemView = new Tag('li', [
