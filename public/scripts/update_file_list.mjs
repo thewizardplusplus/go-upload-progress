@@ -2,7 +2,7 @@ import { withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { Tag, removeAllChildren } from './libs/markup.mjs'
 import { NoFilesView } from './components/NoFilesView.mjs'
-import { FileInfoView } from './components/FileInfoView.mjs'
+import { FileCardView } from './components/FileCardView.mjs'
 
 const defaultFileListUpdatingTimeout = 1000
 
@@ -22,7 +22,7 @@ export async function updateFileList() {
 
     fileInfos.forEach(fileInfo => {
       const fileListItemView = new Tag('li', [
-        FileInfoView({
+        FileCardView({
           fileInfo,
           onFileDeleting: async () => {
             await withErrorDisplaying(async () => {
