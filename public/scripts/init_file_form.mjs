@@ -2,10 +2,9 @@ import { ProgressView } from './components/ProgressView.mjs'
 import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastView.mjs'
-import { Text, Tag, removeParentByChildID } from './libs/markup.mjs'
+import { Text, Tag, removeParentByChildID, removeAllChildren } from './libs/markup.mjs'
 import { NoFilesView, noFilesID } from './components/NoFilesView.mjs'
 import { FileCardView } from './components/FileCardView.mjs'
-import { updateFileList } from './update_file_list.mjs'
 
 export function initFileForm() {
   const fileForm = document.querySelector('.file-form')
@@ -66,7 +65,11 @@ export function initFileForm() {
   totalDeleteButton.addEventListener('click', async () => {
     await withErrorDisplaying(async () => {
       await api.deleteFiles()
-      await updateFileList()
+
+      removeAllChildren(fileListView)
+
+      const fileListItemView = new Tag('li', [NoFilesView()])
+      fileListView.appendChild(fileListItemView.toDOM())
     })
   })
 }
