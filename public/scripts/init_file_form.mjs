@@ -3,6 +3,8 @@ import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastView.mjs'
 import { Text, Tag } from './libs/markup.mjs'
+import { noFilesID } from './components/NoFilesView.mjs'
+import { FileCardView } from './components/FileCardView.mjs'
 import { updateFileList } from './update_file_list.mjs'
 
 export function initFileForm() {
@@ -12,6 +14,7 @@ export function initFileForm() {
   const totalDeleteButton = fileForm.elements['total-delete-button']
 
   const progressView = new ProgressView()
+  const fileListView = document.querySelector('.file-list')
   fileForm.addEventListener('submit', async event => {
     await withErrorDisplaying(async () => {
       event.preventDefault()
@@ -24,21 +27,37 @@ export function initFileForm() {
 
       try {
         progressView.setProgress(0)
-        await api.saveFile(formData, ({ loaded, total }) => {
+        const savedFileInfo = await api.saveFile(formData, ({ loaded, total }) => {
           progressView.setProgress(loaded / total)
         })
+
+        showToast(ToastKind.info, [
+          new Text('The '),
+          new Tag('code', [new Text(fileInput.files[0].name)]),
+          new Text(' file was successfully uploaded.'),
+        ])
+
+        const noFilesView = document.getElementById(noFilesID)
+        if (noFilesView !== null) {
+          noFilesView.parentElement.remove()
+        }
+
+        const fileListItemView = new Tag('li', [
+          FileCardView({
+            fileInfo: savedFileInfo,
+            onFileDeleting: async () => {
+              await withErrorDisplaying(async () => {
+                await api.deleteFile(savedFileInfo.Name)
+                await updateFileList()
+              })
+            },
+          }),
+        ])
+        fileListView.insertBefore(fileListItemView.toDOM(), fileListView.firstChild)
       } finally {
         progressView.hide()
         fileFormControls.removeAttribute('disabled')
       }
-
-      showToast(ToastKind.info, [
-        new Text('The '),
-        new Tag('code', [new Text(fileInput.files[0].name)]),
-        new Text(' file was successfully uploaded.'),
-      ])
-
-      await updateFileList()
     })
   })
 
