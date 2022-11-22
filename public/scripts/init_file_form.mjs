@@ -2,7 +2,7 @@ import { ProgressView } from './components/ProgressView.mjs'
 import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastView.mjs'
-import { Text, Tag } from './libs/markup.mjs'
+import { Text, Tag, removeParentByChildID } from './libs/markup.mjs'
 import { NoFilesView, noFilesID } from './components/NoFilesView.mjs'
 import { FileCardView } from './components/FileCardView.mjs'
 import { updateFileList } from './update_file_list.mjs'
@@ -37,10 +37,7 @@ export function initFileForm() {
           new Text(' file was successfully uploaded.'),
         ])
 
-        const noFilesView = document.getElementById(noFilesID)
-        if (noFilesView !== null) {
-          noFilesView.parentElement.remove()
-        }
+        removeParentByChildID(noFilesID)
 
         const fileListItemView = new Tag('li', [
           FileCardView({
@@ -49,7 +46,7 @@ export function initFileForm() {
               await withErrorDisplaying(async () => {
                 await api.deleteFile(savedFileInfo.Name)
 
-                document.getElementById(fileCardID).parentElement.remove()
+                removeParentByChildID(fileCardID)
                 if (!fileListView.hasChildNodes()) {
                   const fileListItemView = new Tag('li', [NoFilesView()])
                   fileListView.appendChild(fileListItemView.toDOM())

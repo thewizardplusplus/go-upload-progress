@@ -1,6 +1,6 @@
 import { withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
-import { Tag, removeAllChildren } from './libs/markup.mjs'
+import { Tag, removeParentByChildID, removeAllChildren } from './libs/markup.mjs'
 import { NoFilesView } from './components/NoFilesView.mjs'
 import { FileCardView } from './components/FileCardView.mjs'
 
@@ -28,7 +28,7 @@ export async function updateFileList() {
             await withErrorDisplaying(async () => {
               await api.deleteFile(fileInfo.Name)
 
-              document.getElementById(fileCardID).parentElement.remove()
+              removeParentByChildID(fileCardID)
               if (!fileListView.hasChildNodes()) {
                 const fileListItemView = new Tag('li', [NoFilesView()])
                 fileListView.appendChild(fileListItemView.toDOM())

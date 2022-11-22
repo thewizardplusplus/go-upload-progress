@@ -81,6 +81,13 @@ export function removeElementByID(id) {
   }
 }
 
+export function removeParentByChildID(id) {
+  const child = document.getElementById(id)
+  if (child !== null && child.parentElement !== null) {
+    child.parentElement.remove()
+  }
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Node#remove_all_children_nested_within_a_node
 export function removeAllChildren(element) {
   while (element.firstChild) {
