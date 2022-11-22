@@ -20,7 +20,7 @@ export async function saveFile(formData, progressEventHandler) {
         return
       }
 
-      resolve()
+      resolve(request.response)
     })
     request.addEventListener('error', () => {
       rejectWithError('network error')
@@ -35,6 +35,7 @@ export async function saveFile(formData, progressEventHandler) {
     }
 
     request.open('POST', fileAPIRoute)
+    request.responseType = 'json'
     request.send(formData)
   })
 }
