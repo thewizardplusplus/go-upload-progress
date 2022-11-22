@@ -4,8 +4,8 @@ import { capitalizeFirstLetter } from './libs/markup.mjs'
 let globalToastCount = 0
 
 export function showToast(kind, body, lifetimeInMs = defaultToastLifetimeInMs) {
-  const id = globalToastCount++
-  const toastView = ToastView({ id, kind, body, lifetimeInMs })
+  const toastID = globalToastCount++
+  const toastView = ToastView({ id: toastID, kind, body, lifetimeInMs })
 
   const toastContainer = document.querySelector('.toast-container')
   toastContainer.appendChild(toastView.toDOM())

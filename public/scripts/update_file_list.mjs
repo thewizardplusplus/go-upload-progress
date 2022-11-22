@@ -24,10 +24,15 @@ export async function updateFileList() {
       const fileListItemView = new Tag('li', [
         FileCardView({
           fileInfo,
-          onFileDeleting: async () => {
+          onFileDeleting: async fileCardID => {
             await withErrorDisplaying(async () => {
               await api.deleteFile(fileInfo.Name)
-              await updateFileList()
+
+              document.getElementById(fileCardID).parentElement.remove()
+              if (!fileListView.hasChildNodes()) {
+                const fileListItemView = new Tag('li', [NoFilesView()])
+                fileListView.appendChild(fileListItemView.toDOM())
+              }
             })
           },
         }),

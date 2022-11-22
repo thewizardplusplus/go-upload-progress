@@ -3,7 +3,7 @@ import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastView.mjs'
 import { Text, Tag } from './libs/markup.mjs'
-import { noFilesID } from './components/NoFilesView.mjs'
+import { NoFilesView, noFilesID } from './components/NoFilesView.mjs'
 import { FileCardView } from './components/FileCardView.mjs'
 import { updateFileList } from './update_file_list.mjs'
 
@@ -45,10 +45,15 @@ export function initFileForm() {
         const fileListItemView = new Tag('li', [
           FileCardView({
             fileInfo: savedFileInfo,
-            onFileDeleting: async () => {
+            onFileDeleting: async fileCardID => {
               await withErrorDisplaying(async () => {
                 await api.deleteFile(savedFileInfo.Name)
-                await updateFileList()
+
+                document.getElementById(fileCardID).parentElement.remove()
+                if (!fileListView.hasChildNodes()) {
+                  const fileListItemView = new Tag('li', [NoFilesView()])
+                  fileListView.appendChild(fileListItemView.toDOM())
+                }
               })
             },
           }),
