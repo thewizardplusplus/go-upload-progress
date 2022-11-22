@@ -49,8 +49,6 @@ function formatSize(sizeInB) {
 function formatDatetime(datetime) {
   const parsedDatetime = new Date(datetime)
 
-  const formatter = new Intl.DateTimeFormat(formatLocale, {
-    ...datetimeFormatOptions,
-  })
+  const formatter = new Intl.DateTimeFormat(formatLocale, datetimeFormatOptions)
   return formatter.format(parsedDatetime)
 }

@@ -1,11 +1,5 @@
-import {
-  Text,
-  Tag,
-  capitalizeFirstLetter,
-  transformToChildren,
-  removeElementByID,
-} from '../libs/markup.mjs'
-import { IconWithTextViews } from './IconWithTextViews.mjs'
+import { Tag, transformToChildren, removeElementByID } from '../libs/markup.mjs'
+import { ToastHeaderView } from './ToastHeaderView.mjs'
 
 export const immortalToastLifetimeInMs = 0
 export const defaultToastLifetimeInMs = 2000
@@ -59,30 +53,18 @@ export class ToastKind {
 export function ToastView(attributes) {
   attributes = { lifetimeInMs: defaultToastLifetimeInMs, ...attributes }
 
-  const textColorStyleClass = 'text-' + attributes.kind.colorStyle
-  const borderColorStyleClass = 'border-' + attributes.kind.colorStyle
-
   const toastID = `toast-${attributes.id}`
   const removalTimeoutID = setToastRemovalTimeout(toastID, attributes.lifetimeInMs)
 
+  const borderColorStyleClass = 'border-' + attributes.kind.colorStyle
   return new Tag('div', { id: toastID, class: `toast ${borderColorStyleClass} show` }, [
-    new Tag('div', { class: `toast-header ${borderColorStyleClass}` }, [
-      ...IconWithTextViews({
-        iconName: attributes.kind.iconName,
-        iconColorStyle: attributes.kind.colorStyle,
-        text: new Tag('strong', { class: `${textColorStyleClass} flex-grow-1` }, [
-          new Text(capitalizeFirstLetter(attributes.kind.title)),
-        ]),
-      }),
-      new Tag('button', {
-        class: 'btn-close',
-        type: 'button',
-        onclick: () => {
-          clearTimeout(removalTimeoutID)
-          removeElementByID(toastID)
-        },
-      }),
-    ]),
+    ToastHeaderView({
+      kind: attributes.kind,
+      onToastClosing: () => {
+        clearTimeout(removalTimeoutID)
+        removeElementByID(toastID)
+      },
+    }),
     new Tag('div', { class: 'toast-body' }, transformToChildren(attributes.body)),
   ])
 }

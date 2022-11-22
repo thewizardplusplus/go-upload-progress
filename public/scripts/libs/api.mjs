@@ -42,9 +42,7 @@ export async function saveFile(formData, progressEventHandler) {
 
 export async function deleteFile(filename) {
   const params = new URLSearchParams({ filename })
-  const response = await fetch(`${fileAPIRoute}?${params}`, {
-    method: 'DELETE',
-  })
+  const response = await fetch(`${fileAPIRoute}?${params}`, { method: 'DELETE' })
   await throwOnUnsuccessfulResponse(response)
 }
 
