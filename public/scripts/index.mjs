@@ -5,10 +5,10 @@ import { initFileForm } from './init_file_form.mjs'
 import { startFileListUpdating } from './update_file_list.mjs'
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const fileListView = new FileListView(async (fileCardID, filename) => {
+  const fileListView = new FileListView(async filename => {
     await withErrorDisplaying(async () => {
       await api.deleteFile(filename)
-      fileListView.removeFileInfo(fileCardID)
+      fileListView.removeFileInfo(filename)
     })
   })
 

@@ -1,6 +1,6 @@
 import { Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { NoFilesView, noFilesID } from '../components/NoFilesView.mjs'
-import { FileCardView } from '../components/FileCardView.mjs'
+import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
 
 function FileListItemView(attributes) {
   return new Tag('li', [attributes.body])
@@ -26,8 +26,8 @@ export class FileListView {
     this.#fileList.insertBefore(fileListItemView.toDOM(), this.#fileList.firstChild)
   }
 
-  removeFileInfo(fileCardID) {
-    removeParentByChildID(fileCardID)
+  removeFileInfo(filename) {
+    removeParentByChildID(makeFileCardID(filename))
 
     if (!this.#fileList.hasChildNodes()) {
       this.#appendNoFilesView()
@@ -46,10 +46,7 @@ export class FileListView {
   }
 
   #makeFileCardView(fileInfo) {
-    return FileCardView({
-      fileInfo,
-      onFileDeleting: fileCardID => this.#onFileDeleting(fileCardID, fileInfo.Name),
-    })
+    return FileCardView({ fileInfo, onFileDeleting: () => this.#onFileDeleting(fileInfo.Name) })
   }
 
   #appendNoFilesView() {
