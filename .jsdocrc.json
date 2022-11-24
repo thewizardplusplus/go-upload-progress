@@ -1,0 +1,10 @@
+{
+  "source": {
+    "include": ["./public/scripts/"],
+    "includePattern": ".+\\.(js(doc|x)?|mjs)$"
+  },
+  "opts": {
+    "recurse": true,
+    "destination": "./docs/jsdoc/"
+  }
+}
