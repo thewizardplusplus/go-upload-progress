@@ -21,3 +21,11 @@ services:
     volumes:
       - ./docs/swagger.yaml:/opt/go-upload-progress/swagger.yaml:ro
     restart: always
+
+  jsdoc:
+    build:
+      context: .
+      dockerfile: Dockerfile.jsdoc
+    ports:
+      - 9091:80
+    restart: always
