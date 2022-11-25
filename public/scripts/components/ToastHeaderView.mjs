@@ -1,6 +1,29 @@
+/**
+ * @module components/ToastHeaderView
+ */
+
 import { Text, Tag, capitalizeFirstLetter } from '../libs/markup.mjs'
 import { IconWithTextViews } from './IconWithTextViews.mjs'
 
+/**
+ * @typedef {import('./ToastView.mjs').ToastKind} ToastKind
+ */
+
+/**
+ * @typedef {import('../libs/markup.mjs').EventHandler} EventHandler
+ */
+
+/**
+ * @typedef {Object} ToastHeaderViewAttributes
+ * @property {ToastKind} kind
+ * @property {EventHandler} onToastClosing
+ */
+
+/**
+ * @function
+ * @param {ToastHeaderViewAttributes} attributes
+ * @returns {Tag}
+ */
 export function ToastHeaderView(attributes) {
   const textColorStyleClass = 'text-' + attributes.kind.colorStyle
   const borderColorStyleClass = 'border-' + attributes.kind.colorStyle
