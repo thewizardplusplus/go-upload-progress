@@ -1,24 +1,56 @@
+/**
+ * @module controllers/FileListView
+ */
+
 import { Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { NoFilesView, noFilesID } from '../components/NoFilesView.mjs'
 import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
 
-function FileListItemView(attributes) {
+/**
+ * @typedef {import('../libs/markup.mjs').Node} Node
+ */
+
+/**
+ * @typedef {import('../libs/api.mjs').FileInfo} FileInfo
+ */
+
+/**
+ * @callback FileDeletingHandler
+ * @param {string} filename
+ * @returns {void}
+ */
+
+function FileListItemView(/** @type {{ body: Node }} */ attributes) {
+  // @ts-ignore
   return new Tag('li', [attributes.body])
 }
 
+/**
+ * @class
+ */
 export class FileListView {
-  #fileList
-  #onFileDeleting
+  /** @type {HTMLElement} */ #fileList
+  /** @type {FileDeletingHandler} */ #onFileDeleting
 
+  /**
+   * @constructs
+   * @param {FileDeletingHandler} onFileDeleting
+   */
   constructor(onFileDeleting) {
     if (onFileDeleting === undefined) {
       throw new Error('file deleting handler is required')
     }
 
+    // @ts-ignore
     this.#fileList = document.querySelector('.file-list')
     this.#onFileDeleting = onFileDeleting
   }
 
+  /**
+   * @method
+   * @param {FileInfo} fileInfo
+   * @returns {void}
+   */
   addFileInfo(fileInfo) {
     removeParentByChildID(noFilesID)
 
@@ -26,6 +58,11 @@ export class FileListView {
     this.#fileList.insertBefore(fileListItemView.toDOM(), this.#fileList.firstChild)
   }
 
+  /**
+   * @method
+   * @param {string} filename
+   * @returns {void}
+   */
   removeFileInfo(filename) {
     removeParentByChildID(makeFileCardID(filename))
 
@@ -34,6 +71,11 @@ export class FileListView {
     }
   }
 
+  /**
+   * @method
+   * @param {Array.<FileInfo>} fileInfos
+   * @returns {void}
+   */
   setFileInfos(fileInfos) {
     removeAllChildren(this.#fileList)
 
@@ -45,7 +87,7 @@ export class FileListView {
     fileInfos.forEach(fileInfo => this.#appendFileListItemView(this.#makeFileCardView(fileInfo)))
   }
 
-  #makeFileCardView(fileInfo) {
+  #makeFileCardView(/** @type {FileInfo} */ fileInfo) {
     return FileCardView({ fileInfo, onFileDeleting: () => this.#onFileDeleting(fileInfo.Name) })
   }
 
@@ -53,7 +95,7 @@ export class FileListView {
     this.#appendFileListItemView(NoFilesView())
   }
 
-  #appendFileListItemView(body) {
+  #appendFileListItemView(/** @type {Node} */ body) {
     const fileListItemView = FileListItemView({ body })
     this.#fileList.appendChild(fileListItemView.toDOM())
   }
