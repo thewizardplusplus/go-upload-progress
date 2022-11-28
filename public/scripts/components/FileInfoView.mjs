@@ -2,6 +2,7 @@
  * @module components/FileInfoView
  */
 
+import { FileInfo } from '../libs/api.mjs'
 import { Text, Tag } from '../libs/markup.mjs'
 import { FilePropertyViews } from './FilePropertyViews.mjs'
 
@@ -9,10 +10,6 @@ const formatLocale = 'en-US'
 const sizeFormatOptions = { style: 'unit' }
 const sizeFormatUnits = ['byte', 'kilobyte', 'megabyte', 'gigabyte']
 const datetimeFormatOptions = { dateStyle: 'full', timeStyle: 'long' }
-
-/**
- * @typedef {import('../libs/api.mjs').FileInfo} FileInfo
- */
 
 /**
  * @typedef {Object} FileInfoViewAttributes
@@ -30,20 +27,20 @@ export function FileInfoView(attributes) {
     ...FilePropertyViews({
       name: 'name',
       valueIconName: 'link',
-      valueText: new Tag('a', { href: '/files/' + attributes.fileInfo.Name }, [
-        new Text(attributes.fileInfo.Name),
+      valueText: new Tag('a', { href: '/files/' + attributes.fileInfo.name }, [
+        new Text(attributes.fileInfo.name),
       ]),
     }),
     ...FilePropertyViews({
       name: 'size',
       valueIconName: 'file-earmark',
-      valueText: formatSize(attributes.fileInfo.SizeInB),
+      valueText: formatSize(attributes.fileInfo.sizeInB),
     }),
     ...FilePropertyViews({
       name: 'modification time',
       valueIconName: 'calendar',
-      valueText: new Tag('time', { datetime: attributes.fileInfo.ModificationTime }, [
-        new Text(formatDatetime(attributes.fileInfo.ModificationTime)),
+      valueText: new Tag('time', { datetime: attributes.fileInfo.modificationTime }, [
+        new Text(formatDatetime(attributes.fileInfo.modificationTime)),
       ]),
       isLast: true,
     }),

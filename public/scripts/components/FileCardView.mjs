@@ -2,6 +2,7 @@
  * @module components/FileCardView
  */
 
+import { FileInfo } from '../libs/api.mjs'
 import { Tag } from '../libs/markup.mjs'
 import { FileInfoView } from './FileInfoView.mjs'
 import { IconView } from './IconView.mjs'
@@ -16,10 +17,6 @@ const disabledIDCharacters = /[^A-Za-z\d]+/g
 export function makeFileCardID(filename) {
   return `file-card-${filename.replaceAll(disabledIDCharacters, '-')}`
 }
-
-/**
- * @typedef {import('../libs/api.mjs').FileInfo} FileInfo
- */
 
 /**
  * @typedef {import('../libs/markup.mjs').EventHandler} EventHandler
@@ -37,7 +34,7 @@ export function makeFileCardID(filename) {
  * @returns {Tag}
  */
 export function FileCardView(attributes) {
-  const fileCardID = makeFileCardID(attributes.fileInfo.Name)
+  const fileCardID = makeFileCardID(attributes.fileInfo.name)
   return new Tag('div', { id: fileCardID, class: 'card mb-3' }, [
     new Tag('div', { class: 'card-body d-flex' }, [
       FileInfoView({ additionalClasses: 'flex-grow-1 me-3', fileInfo: attributes.fileInfo }),

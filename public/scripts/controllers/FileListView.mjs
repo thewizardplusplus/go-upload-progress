@@ -2,16 +2,13 @@
  * @module controllers/FileListView
  */
 
+import { FileInfo } from '../libs/api.mjs'
 import { Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { NoFilesView, noFilesID } from '../components/NoFilesView.mjs'
 import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
 
 /**
  * @typedef {import('../libs/markup.mjs').Node} Node
- */
-
-/**
- * @typedef {import('../libs/api.mjs').FileInfo} FileInfo
  */
 
 /**
@@ -88,7 +85,7 @@ export class FileListView {
   }
 
   #makeFileCardView(/** @type {FileInfo} */ fileInfo) {
-    return FileCardView({ fileInfo, onFileDeleting: () => this.#onFileDeleting(fileInfo.Name) })
+    return FileCardView({ fileInfo, onFileDeleting: () => this.#onFileDeleting(fileInfo.name) })
   }
 
   #appendNoFilesView() {

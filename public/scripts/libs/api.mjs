@@ -5,11 +5,65 @@
 const fileAPIRoute = '/api/v1/files'
 
 /**
- * @typedef {Object} FileInfo
+ * @typedef {Object} RawFileInfo
  * @property {string} Name
  * @property {number} SizeInB
- * @property {string} ModificationTime In RFC 3339 format, e.g. "2006-01-02T15:04:05.123456789+03:00"
+ * @property {string} ModificationTime In RFC 3339 format, e.g. "2006-01-02T15:04:05.123456789+03:00".
  */
+
+/**
+ * @class
+ */
+export class FileInfo {
+  /** @type {string} */ #name
+  /** @type {number} */ #sizeInB
+  /** @type {string} */ #modificationTime
+
+  /**
+   * @constructs
+   * @param {RawFileInfo} rawFileInfo
+   */
+  constructor(rawFileInfo) {
+    if (rawFileInfo.Name === undefined) {
+      throw new Error('file name is required')
+    }
+    if (rawFileInfo.SizeInB === undefined) {
+      throw new Error('file size is required')
+    }
+    if (rawFileInfo.ModificationTime === undefined) {
+      throw new Error('file modification time is required')
+    }
+
+    this.#name = rawFileInfo.Name
+    this.#sizeInB = rawFileInfo.SizeInB
+    this.#modificationTime = rawFileInfo.ModificationTime
+  }
+
+  /**
+   * @readonly
+   * @type {string}
+   */
+  get name() {
+    return this.#name
+  }
+
+  /**
+   * @readonly
+   * @type {number}
+   */
+  get sizeInB() {
+    return this.#sizeInB
+  }
+
+  /**
+   * @readonly
+   * @type {string}
+   * @description In RFC 3339 format, e.g. "2006-01-02T15:04:05.123456789+03:00".
+   */
+  get modificationTime() {
+    return this.#modificationTime
+  }
+}
 
 /**
  * @typedef {Object} ProgressEventHandlerParams
@@ -32,7 +86,8 @@ export async function getFiles() {
   const response = await fetch(fileAPIRoute)
   await throwOnUnsuccessfulResponse(response)
 
-  return await response.json()
+  const rawFileInfos = await response.json()
+  return rawFileInfos.map((/** @type {RawFileInfo} */ rawFileInfo) => new FileInfo(rawFileInfo))
 }
 
 /**
@@ -55,7 +110,7 @@ export async function saveFile(formData, progressEventHandler) {
         return
       }
 
-      resolve(request.response)
+      resolve(new FileInfo(request.response))
     })
     request.addEventListener('error', () => {
       rejectWithError('network error')
