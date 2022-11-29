@@ -2,7 +2,7 @@
  * @module components/ToastView
  */
 
-import { Tag, transformToChildren, removeElementByID } from '../libs/markup.mjs'
+import { Node, Tag, transformToChildren, removeElementByID } from '../libs/markup.mjs'
 import { ToastHeaderView } from './ToastHeaderView.mjs'
 
 /**
@@ -96,10 +96,6 @@ export class ToastKind {
     return this.#title
   }
 }
-
-/**
- * @typedef {import('../libs/markup.mjs').Node} Node
- */
 
 /**
  * @typedef {Object} ToastViewAttributes

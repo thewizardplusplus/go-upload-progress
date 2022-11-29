@@ -3,11 +3,7 @@
  */
 
 import { ToastKind, ToastView, defaultToastLifetimeInMs } from './components/ToastView.mjs'
-import { capitalizeFirstLetter } from './libs/markup.mjs'
-
-/**
- * @typedef {import('./libs/markup.mjs').Node} Node
- */
+import { Node, capitalizeFirstLetter } from './libs/markup.mjs'
 
 /**
  * @callback BaseHandler

@@ -12,8 +12,33 @@ const eventAttributePrefix = 'on'
 
 /**
  * @class
+ * @see {@link https://stackoverflow.com/a/48428063}
  */
-export class Text {
+export class Node {
+  /**
+   * @constructs
+   */
+  constructor() {
+    if (this.constructor === Node) {
+      throw new Error('"Node" is abstract class')
+    }
+  }
+
+  /**
+   * @method
+   * @abstract
+   * @returns {globalThis.Node}
+   */
+  toDOM() {
+    throw new Error('"Node.toDOM()" is abstract method')
+  }
+}
+
+/**
+ * @class
+ * @extends Node
+ */
+export class Text extends Node {
   /**
    * @static
    * @readonly
@@ -30,11 +55,14 @@ export class Text {
    * @param {string} text
    */
   constructor(text) {
+    super()
+
     this.#text = text ?? this.#text
   }
 
   /**
    * @method
+   * @override
    * @returns {globalThis.Text}
    */
   toDOM() {
@@ -44,8 +72,9 @@ export class Text {
 
 /**
  * @class
+ * @extends Node
  */
-export class Tag {
+export class Tag extends Node {
   /** @type {string} */ #name
   /** @type {Object.<string, string|EventHandler>} */ #attributes = {}
   /** @type {Array.<Node>} */ #children = []
@@ -57,6 +86,8 @@ export class Tag {
    * @param {Array.<Node>} [children]
    */
   constructor(name, attributes, children) {
+    super()
+
     if (name === undefined) {
       throw new Error('tag name is required')
     }
@@ -73,6 +104,7 @@ export class Tag {
 
   /**
    * @method
+   * @override
    * @returns {HTMLElement}
    */
   toDOM() {
@@ -98,10 +130,6 @@ export class Tag {
     return element
   }
 }
-
-/**
- * @typedef {Text|Tag} Node
- */
 
 /**
  * @function

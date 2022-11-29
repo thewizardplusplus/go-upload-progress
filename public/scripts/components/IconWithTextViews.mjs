@@ -2,12 +2,8 @@
  * @module components/IconWithTextViews
  */
 
-import { Text, transformToChildren } from '../libs/markup.mjs'
+import { Node, Text, transformToChildren } from '../libs/markup.mjs'
 import { IconView } from './IconView.mjs'
-
-/**
- * @typedef {import('../libs/markup.mjs').Node} Node
- */
 
 /**
  * @typedef {Object} IconWithTextViewsAttributes

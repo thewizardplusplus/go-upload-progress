@@ -2,14 +2,10 @@
  * @module controllers/FileListView
  */
 
+import { Node, Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { FileInfo } from '../libs/api.mjs'
-import { Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { NoFilesView, noFilesID } from '../components/NoFilesView.mjs'
 import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
-
-/**
- * @typedef {import('../libs/markup.mjs').Node} Node
- */
 
 /**
  * @callback FileDeletingHandler
