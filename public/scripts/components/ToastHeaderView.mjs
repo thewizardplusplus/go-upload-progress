@@ -2,12 +2,9 @@
  * @module components/ToastHeaderView
  */
 
+import { ToastKind } from './ToastKind.mjs'
 import { Text, Tag, capitalizeFirstLetter } from '../libs/markup.mjs'
 import { IconWithTextViews } from './IconWithTextViews.mjs'
-
-/**
- * @typedef {import('./ToastView.mjs').ToastKind} ToastKind
- */
 
 /**
  * @typedef {import('../libs/markup.mjs').EventHandler} EventHandler

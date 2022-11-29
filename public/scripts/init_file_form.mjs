@@ -5,7 +5,7 @@
 import { ProgressView } from './controllers/ProgressView.mjs'
 import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
-import { ToastKind } from './components/ToastView.mjs'
+import { ToastKind } from './components/ToastKind.mjs'
 import { Text, Tag } from './libs/markup.mjs'
 
 /**

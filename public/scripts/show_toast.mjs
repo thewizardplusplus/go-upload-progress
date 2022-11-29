@@ -2,7 +2,8 @@
  * @module show_toast
  */
 
-import { ToastKind, ToastView, defaultToastLifetimeInMs } from './components/ToastView.mjs'
+import { ToastKind } from './components/ToastKind.mjs'
+import { ToastView, defaultToastLifetimeInMs } from './components/ToastView.mjs'
 import { Node, capitalizeFirstLetter } from './libs/markup.mjs'
 
 /**
