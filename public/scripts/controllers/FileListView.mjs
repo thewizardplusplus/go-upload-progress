@@ -2,9 +2,10 @@
  * @module controllers/FileListView
  */
 
-import { Node, Tag, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
+import { Node, removeParentByChildID, removeAllChildren } from '../libs/markup.mjs'
 import { FileInfo } from '../libs/api.mjs'
 import { NoFilesView, noFilesID } from '../components/NoFilesView.mjs'
+import { FileListItemView } from '../components/FileListItemView.mjs'
 import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
 
 /**
@@ -12,11 +13,6 @@ import { FileCardView, makeFileCardID } from '../components/FileCardView.mjs'
  * @param {string} filename
  * @returns {void}
  */
-
-function FileListItemView(/** @type {{ body: Node }} */ attributes) {
-  // @ts-ignore
-  return new Tag('li', [attributes.body])
-}
 
 /**
  * @class
