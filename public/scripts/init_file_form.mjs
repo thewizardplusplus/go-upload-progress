@@ -6,7 +6,7 @@ import { ProgressView } from './controllers/ProgressView.mjs'
 import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastKind.mjs'
-import { Text, Tag } from './libs/markup.mjs'
+import { SuccessUploadMessageViews } from './components/SuccessUploadMessageViews.mjs'
 
 /**
  * @typedef {import('./controllers/FileListView.mjs').FileListView} FileListView
@@ -41,8 +41,10 @@ export function initFileForm(fileListView) {
         })
 
         fileListView.addFileInfo(savedFileInfo)
+
         // @ts-ignore
-        showToast(ToastKind.info, formatSuccessMessage(fileForm))
+        const fileInput = fileForm.elements.file
+        showToast(ToastKind.info, SuccessUploadMessageViews({ filename: fileInput.files[0].name }))
       } finally {
         progressView.hide()
         fileFormControls.removeAttribute('disabled')
@@ -58,15 +60,4 @@ export function initFileForm(fileListView) {
       fileListView.setFileInfos([])
     })
   })
-}
-
-function formatSuccessMessage(/** @type {HTMLFormElement} */ fileForm) {
-  // @ts-ignore
-  const fileInput = fileForm.elements.file
-  return [
-    new Text('The '),
-    // @ts-ignore
-    new Tag('code', [new Text(fileInput.files[0].name)]),
-    new Text(' file was successfully uploaded.'),
-  ]
 }
