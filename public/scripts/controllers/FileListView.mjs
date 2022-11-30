@@ -41,6 +41,11 @@ export class FileListView {
    * @returns {void}
    */
   addFileInfo(fileInfo) {
+    const fileCard = document.getElementById(makeFileCardID(fileInfo.name))
+    if (fileCard !== null) {
+      return
+    }
+
     removeParentByChildID(noFilesID)
 
     const fileListItemView = FileListItemView({ body: this.#makeFileCardView(fileInfo) })
