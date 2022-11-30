@@ -20,7 +20,6 @@ import { IconWithTextViews } from './IconWithTextViews.mjs'
  */
 export function FilePropertyViews(attributes) {
   return [
-    // @ts-ignore
     new Tag('dt', [new Text(formatName(attributes.name))]),
     new Tag('dd', attributes.isLast ? { class: 'mb-0' } : undefined, [
       ...IconWithTextViews({ iconName: attributes.valueIconName, text: attributes.valueText }),

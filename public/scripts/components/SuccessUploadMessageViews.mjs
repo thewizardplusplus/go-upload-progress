@@ -17,7 +17,6 @@ import { Node, Text, Tag } from '../libs/markup.mjs'
 export function SuccessUploadMessageViews(attributes) {
   return [
     new Text('The '),
-    // @ts-ignore
     new Tag('code', [new Text(attributes.filename)]),
     new Text(' file was successfully uploaded.'),
   ]

@@ -82,23 +82,24 @@ export class Tag extends Node {
   /**
    * @constructs
    * @param {string} name
-   * @param {Object.<string, string|EventHandler>} [attributes]
+   * @param {Object.<string, string|EventHandler>|Array.<Node>} [attributesOrChildren]
    * @param {Array.<Node>} [children]
    */
-  constructor(name, attributes, children) {
+  constructor(name, attributesOrChildren, children) {
     super()
 
     if (name === undefined) {
       throw new Error('tag name is required')
     }
     // support for a call with only two arguments: a name and children
-    if (children === undefined && Array.isArray(attributes)) {
-      children = attributes
-      attributes = undefined
+    if (children === undefined && Array.isArray(attributesOrChildren)) {
+      children = attributesOrChildren
+      attributesOrChildren = undefined
     }
 
     this.#name = name
-    this.#attributes = attributes ?? this.#attributes
+    // @ts-ignore
+    this.#attributes = attributesOrChildren ?? this.#attributes
     this.#children = children ?? this.#children
   }
 

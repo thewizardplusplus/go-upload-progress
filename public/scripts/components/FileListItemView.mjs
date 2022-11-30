@@ -15,6 +15,5 @@ import { Node, Tag } from '../libs/markup.mjs'
  * @returns {Tag}
  */
 export function FileListItemView(attributes) {
-  // @ts-ignore
   return new Tag('li', [attributes.body])
 }
