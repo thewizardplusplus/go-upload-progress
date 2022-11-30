@@ -2,12 +2,9 @@
  * @module update_file_list
  */
 
+import { FileListView } from './controllers/FileListView.mjs'
 import { withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
-
-/**
- * @typedef {import('./controllers/FileListView.mjs').FileListView} FileListView
- */
 
 const defaultFileListUpdatingTimeout = 1000
 

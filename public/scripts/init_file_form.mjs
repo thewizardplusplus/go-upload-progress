@@ -2,15 +2,12 @@
  * @module init_file_form
  */
 
+import { FileListView } from './controllers/FileListView.mjs'
 import { ProgressView } from './controllers/ProgressView.mjs'
 import { showToast, withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { ToastKind } from './components/ToastKind.mjs'
 import { SuccessUploadMessageViews } from './components/SuccessUploadMessageViews.mjs'
-
-/**
- * @typedef {import('./controllers/FileListView.mjs').FileListView} FileListView
- */
 
 /**
  * @function

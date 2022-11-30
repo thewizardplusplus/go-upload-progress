@@ -19,7 +19,9 @@ export function makeFileCardID(filename) {
 }
 
 /**
- * @typedef {import('../libs/markup.mjs').EventHandler} EventHandler
+ * @callback EventHandler
+ * @param {Event} event
+ * @returns {void}
  */
 
 /**

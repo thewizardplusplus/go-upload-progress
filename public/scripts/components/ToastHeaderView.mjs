@@ -7,7 +7,9 @@ import { Text, Tag, capitalizeFirstLetter } from '../libs/markup.mjs'
 import { IconWithTextViews } from './IconWithTextViews.mjs'
 
 /**
- * @typedef {import('../libs/markup.mjs').EventHandler} EventHandler
+ * @callback EventHandler
+ * @param {Event} event
+ * @returns {void}
  */
 
 /**
