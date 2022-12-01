@@ -2,7 +2,7 @@ import { FileListView } from './controllers/FileListView.mjs'
 import { withErrorDisplaying } from './show_toast.mjs'
 import * as api from './libs/api.mjs'
 import { initFileForm } from './init_file_form.mjs'
-import { startFileListUpdating } from './update_file_list.mjs'
+import { loadFileList } from './load_file_list.mjs'
 
 window.addEventListener('DOMContentLoaded', async () => {
   const fileListView = new FileListView(async filename => {
@@ -13,5 +13,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   })
 
   initFileForm(fileListView)
-  await startFileListUpdating(fileListView)
+  await loadFileList(fileListView)
 })
